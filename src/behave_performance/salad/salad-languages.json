@@ -1,0 +1,418 @@
+{
+    "es": {
+      "count": [
+          "Cuenta",
+          "Contar",
+          "Cantidad",
+          "Número"
+      ],
+      "features": [
+        "Características",
+        "Requisitos"
+      ],
+      "group": [
+        "* ",
+        "Grupo",
+        "Muestra"
+      ],
+      "groups": [
+        "Grupos",
+        "Muestras",
+        "Poblaciones"
+      ],
+      "name": "Spanish",
+      "native": "espaÃ±ol",
+      "plan": [
+        "Plan"
+      ],
+       "population": [
+        "μ",
+        "Poblacione",
+        "Pop"
+      ],
+      "percentage": [
+        "%",
+        "Porcentaje",
+        "Porcentage",
+        "Percent"
+      ],
+      "randomWait": [
+        "Espera aleatoria",
+        "AleatorioEsperar",
+        "Aleatorio Esperar",
+        "AzarEsperar"
+      ],
+      "runners": [
+        "Corredores",
+        "Corredoras",
+        "Hilos"
+      ],
+      "rampUp": [
+        "Rampa para arriba",
+        "Rampa Arriba",
+        "RampaArriba",
+        "Rampa arriba"
+      ],
+      "rampDown": [
+        "Rampa hacia abajo",
+        "RampaAbajo",
+        "Rampa Abajo",
+        "Rampa abajo"
+      ],
+      "simulation": [
+        "Simulación"
+      ],
+      "simulationPeriod": [
+        "Período Simulation",
+        "Período de Sim",
+        "Simulación de tiempo",
+        "Simulación cronometrada",
+        "Período de Simulación",
+        "Sim cronometrada",
+        "Temporizador Sim"
+      ],
+      "simulationSample": [
+        "Muestra de simulación",
+        "Muestra"
+      ],
+      "start": [
+        "Start",
+        "Start At"
+      ],
+      "stop": [
+        "Stop",
+        "Stop At"
+      ],
+      "synchronized": [
+        "Sincronizado",
+        "Tamaño de grupo sincronizado"
+      ],
+      "time": [
+        "Tiempo"
+      ],
+      "totalCount": [
+        "Cuenta total",
+        "CuentaTotal"
+      ],
+      "totalRunners": [
+        "Corredoras totales",
+        "Corredores totales",
+        "CorredoresTotales"
+      ],
+      "type": [
+        "Tipo"
+      ]
+    },
+    "en": {
+        "count": [
+          "Count",
+          "Quanity",
+          "Number",
+          "Amount"
+        ],
+        "features": [
+          "Features",
+          "Requirements"
+        ],
+        "group": [
+          "* ",
+          "Group",
+          "Sample"
+        ],
+        "groups": [
+          "Groups",
+          "Samples",
+          "Populations"
+        ],
+        "name": "English",
+        "native": "English",
+        "plan": [
+            "Plan"
+          ],
+        "population": [
+          "μ",
+          "Population",
+          "Pop"
+        ],
+        "percentage": [
+          "%",
+          "Percentage",
+          "Percent"
+        ],
+        "randomWait": [
+            "RandomWait",
+            "Random Wait",
+            "RandomWaitMean"
+        ],
+        "runners": [
+            "Runners",
+            "Threads"
+        ],
+        "rampUp": [
+            "Ramp Up",
+            "RampUp",
+            "Ramp^"
+        ],
+        "rampDown": [
+            "Ramp Down",
+            "RampDown",
+            "RampDn"
+        ],
+        "simulation": [
+          "Simulation",
+          "Sim"
+        ],
+        "simulationPeriod": [
+          "Simulation Period",
+          "Sim Period",
+          "Timed Simulation",
+          "Timed Sim"
+        ],
+        "start": [
+          "Start",
+          "Start At"
+        ],
+        "stop": [
+          "Stop",
+          "Stop At"
+        ],
+        "synchronized": [
+          "Synchronized"
+        ],
+        "time": [
+          "Time",
+          "Period"
+        ],
+        "totalCount": [
+          "Total Count",
+          "TotalCount"
+        ],
+        "totalRunners": [
+          "Total Runners",
+          "TotalRunners"
+        ],
+        "type": [
+          "Type"
+        ]
+
+      },
+    "de": {
+        "count": [
+          "Zählen",
+          "Läufer",
+          "Abzählen",
+          "Rechnen",
+          "Anzahl",
+          "Menge"
+        ],
+        "features": [
+          "Merkmale",
+          "Funktionalität",
+          "Funktionen"
+        ],
+        "group": [
+          "* ",
+          "Gruppe"
+        ],
+        "groups": [
+          "Gruppen",
+          "Populationen"
+        ],
+        "name": "German",
+        "native": "Deutsch",
+        "plan": [
+          "Plan",
+          "Planen"
+        ],
+        "population": [
+          "μ",
+          "Bevölkerung",
+          "Pop"
+        ],
+        "percentage": [
+          "%",
+          "Prozentsatz",
+          "Prozent"
+        ],
+        "randomWait": [
+          "ZufälligesWarten",
+          "Zufälliges Warten",
+          "ZufälligeWartezeit",
+          "Zufällige Wartezeit",
+          "ZufälligeWartezeitBedeuten",
+          "Zufällige Wartezeit bedeuten"
+        ],
+        "runners": [
+          "Läufer",
+          "Läuferinnen",
+          "Themen"
+        ],
+        "rampUp": [
+          "RampeBis",
+          "Aufstocken",
+          "Rampe Bis",
+          "Rampe Hoch",
+          "rampUp",
+          "Ramp Up",
+          "Ramp^"
+        ],
+        "rampDown": [
+          "Rampe nach unten",
+          "Runterfahren",
+          "Rampe Runter",
+          "Abwärtsrampe",
+          "RampDown",
+          "Ramp Down"
+        ],
+        "simulation": [
+          "Simulation",
+          "Sim"
+        ],
+        "simulationPeriod": [
+          "Simulationszeitraum",
+          "SimulationPeriod",
+          "Simulations Zeitraum"
+
+        ],
+        "simulationSample": [
+          "Simulationsbeispiel",
+          "SimulationBeispiel",
+          "Sim-Beispiel",
+          "Probe"
+        ],
+        "start": [
+          "Start",
+          "Start At",
+          "Anfangen bei"
+        ],
+        "stop": [
+          "Stop",
+          "Stop At",
+          "Stoppen",
+          "Halte bei"
+        ],
+        "synchronized": [
+          "Synchronisiert"
+        ],
+        "time": [
+          "Zeit"
+        ],
+        "totalCount": [
+          "Komplette Anzahl",
+          "GesamtZählen",
+          "Total Count",
+          "TotalCount"
+        ],
+        "totalRunners": [
+          "Totale Läufer",
+          "TotaleLäufer"
+        ],
+        "type": [
+          "Typ"
+        ]
+      },
+    "it": {
+        "count": [
+          "Contare",
+          "Conteggio",
+          "Quantità",
+          "Numero"
+        ],
+        "features": [
+          "Caratteristiche",
+          "Esigenze aziendali"
+        ],
+        "group": [
+          "* ",
+          "Grupo",
+          "Gruppo",
+          "gruppo"
+        ],
+        "groups": [
+          "Gruppi",
+          "Popolazioni"
+        ],
+        "name": "Italian",
+        "native": "italiano",
+        "plan": [
+          "Piano"
+        ],
+        "population": [
+          "μ",
+          "Popolazione",
+          "Pop"
+        ],
+        "percentage": [
+          "%",
+          "Percentage",
+          "Percentuale",
+          "Percent"
+        ],
+        "randomWait": [
+          "Attesa casuale",
+          "Attesa Casuale",
+          "AttesaCasuale",
+          "attesa casuale"
+        ],
+        "runners": [
+          "Corridori",
+          "Filettaturas",
+          "Threads"
+        ],
+        "rampUp": [
+          "Rampa in alto",
+          "RampaSu",
+          "Rampa Su",
+          "Tempo di Accelerazione"
+        ],
+        "rampDown": [
+          "Rampa hacia abajo",
+          "Rampa verso il basso",
+          "Rampa giù",
+          "RampaGiù"
+        ],
+        "simulation": [
+          "Simulazione",
+          "Sim"
+        ],
+        "simulationPeriod": [
+          "Periodo di simulazione",
+          "Periodo SIM",
+          "Simulazione temporizzata",
+          "Temporizzato SIM"
+        ],
+        "simulationSample": [
+          "Esempio di simulazione",
+          "Campione Sim",
+          "Campione"
+        ],
+        "start": [
+          "Inizio",
+          "Iniziare A"
+        ],
+        "stop": [
+          "Fermare",
+          "Fermarsi A"
+        ],
+        "synchronized": [
+          "Sincronizzato",
+          "dimensione gruppo sincronizzato",
+          "DimensioneGruppoSincronizzato"
+        ],
+        "time": [
+          "Tempo"
+        ],
+        "totalCount": [
+          "Conteggio totale",
+          "ConteggioTotale"
+        ],
+        "totalRunners": [
+          "Corridori Totali",
+          "CorridoriTotali"
+        ],
+        "type": [
+          "Tipa",
+          "Tipo"
+        ]
+    }
+}

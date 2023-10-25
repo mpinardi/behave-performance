@@ -1,0 +1,44 @@
+#language: it
+@planItalian
+@language
+Piano: prova
+
+#6
+@Salto
+Simulazione: simulazione molto semplice
+Gruppo test.feature
+#Numero di thread
+Corridori: 1
+#numero totale di thread da eseguire.
+Conteggio: 6
+#un'attesa casuale opzionale significa prima che il thread esegua i test.
+#thread attenderà tra +-50% di questa media
+Attesa casuale: 00:00:02
+
+@Salto
+# Verranno eseguiti tutti i gruppi per il periodo successivo
+Periodo di simulazione: periodo di simulazione 2
+gruppo test.feature
+|tasso|
+|valore modificato |
+Filettaturas: 25
+gruppo test1.feature
+|tasso|
+|valore modificato |
+Filettaturas: 25
+gruppo test2.feature
+|tasso|
+|valore modificato |
+Filettaturas: 25
+#count viene ignorato in un periodo di simulazione
+Conteggio: 1
+gruppo test3.feature
+|tasso|
+|valore modificato |
+Filettaturas: 25
+#count viene ignorato in un periodo di simulazione
+Conteggio: 1
+#tempo di esecuzione
+Tempo: 00:00:30
+RampaSu: 00:00:10
+RampaGiù: 00:00:10

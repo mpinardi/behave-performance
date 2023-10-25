@@ -1,0 +1,8 @@
+/build
+/coverage
+/learning
+/behave_performance.egg-info
+/src/behave-performance.egg-info
+**/__pycache__
+**/.eggs/
+**/*.log

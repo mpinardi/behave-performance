@@ -1,0 +1,44 @@
+#language: es
+@planSpanish
+@language
+Plan: prueba
+
+#6
+@Saltar
+Simulación: simulación muy simple
+Grupo test.feature
+#Número de hilos
+Corredores: 1
+#número total de subprocesos a ejecutar.
+Cuenta: 6
+#una espera aleatoria opcional significa antes de que el subproceso ejecute las pruebas.
+#thread esperará entre +-50% de esta media
+AleatorioEsperar: 00:00:02
+
+@Saltar
+# Ejecutará todos los grupos durante el período siguiente
+Período de Simulación: período de simulación 2
+Grupo test.feature
+|valorar|
+|valor modificado |
+Hilos: 25
+Grupo test1.feature
+|valorar|
+|valor modificado |
+Hilos: 25
+Grupo test2.feature
+|valorar|
+|valor modificado |
+Hilos: 25
+#count se ignora en un período de simulación
+Contar: 1
+Grupo test3.feature
+|valorar|
+|valor modificado |
+Hilos: 25
+#count se ignora en un período de simulación
+Contar: 1
+#tiempo de ejecución
+Tiempo: 00:00:30
+Rampa Arriba: 00:00:10
+Rampa Abajo: 00:00:10

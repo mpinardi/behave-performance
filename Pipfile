@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pyee = "*"
+aiofiles = "*"
+behave = {git = "https://github.com/behave/behave"}
+
+[dev-packages]
+autopep8 = "*"
+setuptools = "*"
+
+[requires]
+python_version = "3.12"

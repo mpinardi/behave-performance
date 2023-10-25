@@ -1,0 +1,78 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Behave Performance Language",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/src/behave_performance",
+            "program": "__main__.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "args": ["-p=../../test/plans","../../test/features","--plan-tags=@planSpanish","-f=summary","--language=es"]
+        },
+        {
+            "name": "Behave Performance Simple",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/src/behave_performance",
+            "program": "__main__.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "args": ["-p=../../test/plans","../../test/features","-f=statistics::prctl:70,prctl:95.5","--plan-tags=@simple","-f=progress","-f=summary"]
+        },
+        {
+            "name": "Behave Performance Dead Simple",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/src/behave_performance",
+            "program": "__main__.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "args": ["-p=../../test/plans","../../test/features","--plan-tags=@deadsimple","-f=progress","-f=statistics::prctl:70,prctl:95.5","-f=summary","-f=taurus:C:/test/taurus|_@HHmmss.csv","-f=chartpoints:C:/test/chartpoints|_@HHmmss.csv"]
+        },
+        {
+            "name": "Behave Performance Dead Simple & Simple",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/src/behave_performance",
+            "program": "__main__.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "args": ["-p=../../test/plans","../../test/features","--plan-tags=@deadsimple or @simple","-f=progress","-f=summary","-f=taurus:C:/test/taurus|_#1.csv","-f=chartpoints:C:/test/chartpoints|_#1.csv"]
+        },
+        {
+            "name": "Behave Performance Period",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/src/behave_performance",
+            "program": "__main__.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "args": ["-p=../../test/plans","../../test/features","--plan-tags=@simperiodtest","-f progress","-f statistics::prctl:70,prctl:95.5","-f summary","-f taurus:C:/test/taurus|_HHmmss.csv","-f chartpoints:C:/test/chartpoints|_@HHmmss.csv"]
+        },
+        {
+            "name": "Python: Behave current file",
+            "type": "python",
+            "request": "launch",
+            "module": "behave",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args":[
+                "--no-capture",
+                "--no-capture-stderr",
+                "${file}"
+            ]
+        }
+    ]
+}

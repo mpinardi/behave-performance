@@ -1,0 +1,44 @@
+#language: de
+@planGerman
+@language
+Plan: testen
+
+#6
+@Hop
+Simulation: sehr einfache Simulation
+Gruppe test.feature
+#Anzahl der Themen
+Läufer: 1
+#Gesamtzahl der auszuführenden Threads.
+Anzahl: 6
+#ein optionales zufälliges Warten bedeutet, bevor der Thread Tests ausführt.
+#thread wartet zwischen +-50 % dieses Durchschnitts
+ZufälligesWarten: 00:00:02
+
+@Hop
+# Alle Gruppen werden für die nächste Periode ausgeführt
+Simulationszeitraum: Simulationszeitraum 2
+Gruppe test.feature
+|bewerten|
+|geänderter Wert |
+Themen: 25
+Gruppe test1.feature
+|Wert|
+|geänderter Wert |
+Themen: 25
+Gruppe test2.feature
+|bewerten|
+|geänderter Wert |
+Themen: 25
+#count wird in einem Simulationszeitraum ignoriert
+Anzahl: 1
+Gruppe test3.feature
+|bewerten|
+|geänderter Wert |
+Themen: 25
+#count wird in einem Simulationszeitraum ignoriert
+Anzahl: 1
+#Ausführungszeit
+Zeit: 00:00:30
+RampeBis: 00:00:10
+Abwärtsrampe: 00:00:10

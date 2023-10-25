@@ -1,0 +1,363 @@
+{
+    "es": {
+      "count": [
+          "Cuenta"
+      ],
+      "features": [
+        "Características",
+        "Requisitos"
+      ],
+      "group": [
+        "* ",
+        "Grupo"
+      ],
+      "groups": [
+        "Grupos",
+        "Poblaciones"
+      ],
+      "name": "Spanish",
+      "native": "espaÃ±ol",
+      "plan": [
+        "Plan"
+      ],
+       "population": [
+        "μ",
+        "Poblacione",
+        "Pop"
+      ],
+      "percentage": [
+        "%",
+        "Percentage",
+        "Percent"
+      ],
+      "randomWait": [
+        "Espera aleatoria",
+        "AzarEsperar"
+      ],
+      "runners": [
+        "Corredores",
+        "Hilos"
+      ],
+      "rampUp": [
+        "Rampa para arriba",
+        "Rampa Arriba",
+        "RampaArriba",
+        "Rampa arriba"
+      ],
+      "rampDown": [
+        "Rampa hacia abajo",
+        "RampaAbajo",
+        "Rampa Abajo",
+        "Rampa abajo"
+      ],
+      "simulation": [
+        "Simulación"
+      ],
+      "simulationPeriod": [
+        "Período Simmulation",
+        "Período de SIM",
+        "Simulación de tiempo",
+        "Temporizador SIM"
+      ],
+      "simulationSample": [
+        "Muestra de simulación",
+        "Muestra"
+      ],
+      "start": [
+        "Start",
+        "Start At"
+      ],
+      "stop": [
+        "Stop",
+        "Stop At"
+      ],
+      "synchronized": [
+        "Sincronizado",
+        "Tamaño de grupo sincronizado"
+      ],
+      "time": [
+        "Tiempo"
+      ],
+      "totalRunners": [
+        "Corredoras totales",
+        "Corredores totales",
+        "CorredoresTotales"
+      ],
+      "type": [
+        "Tipo"
+      ]
+    },
+    "en": {
+        "count": [
+          "Count"
+        ],
+        "features": [
+          "Features",
+          "Requirements"
+        ],
+        "group": [
+          "* ",
+          "Group"
+        ],
+        "groups": [
+          "Groups",
+          "Populations"
+        ],
+        "name": "English",
+        "native": "English",
+        "plan": [
+            "Plan"
+          ],
+        "population": [
+          "μ",
+          "Population",
+          "Pop"
+        ],
+        "percentage": [
+          "%",
+          "Percentage",
+          "Percent"
+        ],
+        "randomWait": [
+            "RandomWait",
+            "Random Wait",
+            "RandomWaitMean"
+        ],
+        "runners": [
+            "Runners",
+            "Threads"
+        ],
+        "rampUp": [
+            "Ramp Up",
+            "RampUp",
+            "Ramp^"
+        ],
+        "rampDown": [
+            "Ramp Down",
+            "RampDown",
+            "RampDn"
+        ],
+        "simulation": [
+          "Simulation",
+          "Sim"
+        ],
+        "simulationPeriod": [
+          "Simulation Period",
+          "Sim Period",
+          "Timed Simulation",
+          "Timed Sim"
+        ],
+        "simulationSample": [
+          "Simulation Sample",
+          "Sim Sample",
+          "Sample"
+        ],
+        "start": [
+          "Start",
+          "Start At"
+        ],
+        "stop": [
+          "Stop",
+          "Stop At"
+        ],
+        "synchronized": [
+          "Synchronized",
+          "SynchronizedGroupSize"
+        ],
+        "time": [
+          "Time",
+          "Period"
+        ],
+        "totalRunners": [
+          "Total Runners",
+          "TotalRunners"
+        ],
+        "type": [
+          "Type"
+        ]
+
+      },
+    "de": {
+        "count": [
+          "Zählen"
+        ],
+        "features": [
+          "Merkmale",
+          "Funktionalität",
+          "Funktionen"
+        ],
+        "group": [
+          "* ",
+          "Gruppe"
+        ],
+        "groups": [
+          "Gruppen",
+          "Populationen"
+        ],
+        "name": "German",
+        "native": "Deutsch",
+        "plan": [
+          "Plan"
+        ],
+        "population": [
+          "μ",
+          "Bevölkerung",
+          "Pop"
+        ],
+        "percentage": [
+          "%",
+          "Percentage",
+          "Percent"
+        ],
+        "randomWait": [
+          "ZufälligeWartezeit",
+          "Zufällige Wartezeit",
+          "ZufälligeWartezeitBedeuten",
+          "Zufällige Wartezeit bedeuten"
+        ],
+        "runners": [
+          "Läufer",
+          "Stufen"
+        ],
+        "rampUp": [
+          "RampeBis",
+          "Aufstocken",
+          "Rampe Bis",
+          "Rampe Hoch",
+          "rampUp",
+          "Ramp Up",
+          "Ramp^"
+        ],
+        "rampDown": [
+          "Rampe nach unten",
+          "Runterfahren",
+          "Rampe Runter",
+          "RampDown",
+          "Ramp Down"
+        ],
+        "simulation": [
+          "Simulation",
+          "Sim"
+        ],
+        "simulationPeriod": [
+          "Simulationszeitraum",
+          "SimulationPeriod"
+        ],
+        "simulationSample": [
+          "Simulationsbeispiel",
+          "SimulationBeispiel",
+          "Sim-Beispiel",
+          "Probe"
+        ],
+        "start": [
+          "Start",
+          "Start At"
+        ],
+        "stop": [
+          "Stop",
+          "Stop At"
+        ],
+        "synchronized": [
+          "Synchronisiert"
+        ],
+        "time": [
+          "Zeit"
+        ],
+        "totalRunners": [
+          "Totale Läufer",
+          "TotaleLäufer"
+        ],
+        "type": [
+          "Typ"
+        ]
+      },
+    "it": {
+        "count": [
+          "Contare"
+        ],
+        "features": [
+          "Caratteristiche",
+          "Esigenze aziendali"
+        ],
+        "group": [
+          "* ",
+          "Grupo"
+        ],
+        "groups": [
+          "Gruppi",
+          "Popolazioni"
+        ],
+        "name": "Italian",
+        "native": "italiano",
+        "plan": [
+          "Piano"
+        ],
+        "population": [
+          "μ",
+          "Popolazione",
+          "Pop"
+        ],
+        "percentage": [
+          "%",
+          "Percentage",
+          "Percent"
+        ],
+        "randomWait": [
+          "Attesa Casuale",
+          "AttesaCasuale",
+          "attesa casuale"
+        ],
+        "runners": [
+          "Corridori",
+          "Threads"
+        ],
+        "rampUp": [
+          "Rampa in alto",
+          "Rampa Su",
+          "Tempo di Accelerazione"
+        ],
+        "rampDown": [
+          "Rampa hacia abajo",
+          "Rampa giù"
+        ],
+        "simulation": [
+          "Simulazione",
+          "Sim"
+        ],
+        "simulationPeriod": [
+          "Periodo di simulazione",
+          "Periodo SIM",
+          "Simulazione temporizzata",
+          "Temporizzato SIM"
+        ],
+        "simulationSample": [
+          "Esempio di simulazione",
+          "Campione Sim",
+          "Campione"
+        ],
+        "start": [
+          "Start",
+          "Start At"
+        ],
+        "stop": [
+          "Stop",
+          "Stop At"
+        ],
+        "synchronized": [
+          "Sincronizzato",
+          "dimensione gruppo sincronizzato",
+          "DimensioneGruppoSincronizzato"
+        ],
+        "time": [
+          "Tempo"
+        ],
+        "totalRunners": [
+          "Corridori Totali",
+          "TCorridoriTotali"
+        ],
+        "type": [
+          "Tipa",
+          "Tipo"
+        ]
+    }
+}
