@@ -5,6 +5,7 @@ from behave_performance.formatter.helpers import MinionOptionSplitter
 from behave_performance.results import Result
 from behave_performance.formatter.statistics import StatisticsResult
 
+
 class ChartPointsFormatter(Formatter):
     DEFAULT=False
     FAMILY='result'
@@ -17,7 +18,7 @@ class ChartPointsFormatter(Formatter):
         self.plugin_minions = []
         if not self.is_stdio():
             self.color_fns.disable()
-        from formatter.builder import PluginBuilder as pb
+        from .builder import PluginBuilder as pb
         for option in self.options:
             if option.isnumeric():
                 mp = int(option)
@@ -26,15 +27,16 @@ class ChartPointsFormatter(Formatter):
                 m = MinionOptionSplitter.split(option, options)
                 if pb.is_minion(m['type'],options):
                     self.plugin_minions.append(m)
-        from runtime import PERF_EVENTS
+        from ..runtime import PERF_EVENTS
         self.event_broadcaster.add_listener(PERF_EVENTS.SIMULATION_RUN_FINISHED, self.process_data)
 
     async def process_data(self, data):
+        self.event_broadcaster.emit('formatter-started', 'chartpoints')
         self.event_broadcaster.emit('chartpoints-started')
         await self.create_chart_points(data)
         await self.log_chart_points()
-        
         self.event_broadcaster.emit('chartpoints-finished', self.chart_points)
+        self.event_broadcaster.emit('formatter-finished', 'chartpoints')
 
     async def create_chart_points(self, data:Result):
         start_period = data.start
@@ -107,7 +109,7 @@ class ChartPointsFormatter(Formatter):
         return (time.total_seconds() / times)
 
     async def __run_minions(self, chart_point:StatisticsResult)->StatisticsResult:
-        from formatter.builder import PluginBuilder
+        from .builder import PluginBuilder
         for plugin in self.plugin_minions:
             sc = PluginBuilder.build(plugin['type'], plugin['options'])
             result = await sc.run(chart_point)

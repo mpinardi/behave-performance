@@ -1,9 +1,9 @@
-from salad.ast_builder import AstBuilder
-from salad.parser import Parser
-from salad.veggies.compiler import Compiler
-from salad.errors import ParserError, CompositeParserException
-from salad.stream.id_generator import IdGenerator
-from salad.token_matcher import TokenMatcher
+from behave_performance.salad.ast_builder import AstBuilder
+from behave_performance.salad.parser import Parser
+from behave_performance.salad.veggies.compiler import Compiler
+from behave_performance.salad.errors import ParserError, CompositeParserException
+from behave_performance.salad.stream.id_generator import IdGenerator
+from behave_performance.salad.token_matcher import TokenMatcher
 
 def create_errors(errors, uri):
     for error in errors:

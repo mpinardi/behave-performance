@@ -10,8 +10,8 @@ class StatisticsFormatter(Formatter):
     SINGLETON=True
 
     def __init__(self, options):
-        from runtime import PERF_EVENTS
-        from formatter.builder import PluginBuilder as pb
+        from behave_performance.runtime import PERF_EVENTS
+        from behave_performance.formatter.builder import PluginBuilder as pb
         super().__init__(options)
         self.plugin_minions = []
         for option in self.options:
@@ -23,7 +23,7 @@ class StatisticsFormatter(Formatter):
         self.event_broadcaster.add_listener(PERF_EVENTS.CONFIG_STATISTICS, self.config)
     
     async def generate_statistics(self, data):
-        from runtime import PERF_EVENTS
+        from behave_performance.runtime import PERF_EVENTS
         self.event_broadcaster.emit(PERF_EVENTS.SIMULATION_STATISTICS_STARTED)
         self.calculated_result = await generate_default_statistics(data, self.strict, None, None)
         await self.run_minions()

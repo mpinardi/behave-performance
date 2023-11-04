@@ -1,6 +1,6 @@
 import sys
-from runtime import BehavePerformance
-from arguments import parse_arguments
+from behave_performance.runtime import BehavePerformance
+from behave_performance.arguments import parse_arguments
 
 """
 """

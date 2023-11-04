@@ -6,11 +6,11 @@ name = "pypi"
 [packages]
 pyee = "*"
 aiofiles = "*"
-behave = {git = "https://github.com/behave/behave"}
+behave = {git = "https://github.com/behave/behave@v1.2.7.dev5"}
 
 [dev-packages]
 autopep8 = "*"
 setuptools = "*"
 
 [requires]
-python_version = "3.12"
+python_version = "3.10"

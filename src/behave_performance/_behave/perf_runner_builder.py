@@ -1,12 +1,11 @@
 from __future__ import absolute_import, print_function, with_statement
 
 import os.path
-
 import six
 
-from testcase_filter import TestCaseFilter
-from _behave.perf_runner import PerfRunner
-from _behave.slice import Slice
+from behave_performance.testcase_filter import TestCaseFilter
+from .perf_runner import PerfRunner
+from .slice import Slice
 from behave.runner import Context, path_getrootdir
 from behave.exception import ConfigError
 from behave.configuration import Configuration, LogLevel

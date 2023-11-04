@@ -115,3 +115,19 @@ Group test3.feature
 Time: 00:00:30
 RampUp: 00:00:10
 RampDown: 00:00:10
+
+
+@tskip
+@simperiod3testfail
+#Will run all groups for the period bellow
+Simulation Period: simulation 3 period
+Group test.feature
+Group test3.feature
+	|value out|
+	|changed value |
+		Threads: 25
+		#count is ignored in a simulation period
+		Count: 1
+#! No run time
+Time: 00:00:30
+RampDown: 00:00:10

@@ -1,6 +1,6 @@
 from .summary_helpers import convert_output
-from formatter.color_fns import ColorFns
-from formatter.statistics import GroupStatistics,StatisticsResult, StatType
+from behave_performance.formatter.color_fns import ColorFns
+from behave_performance.formatter.statistics import GroupStatistics,StatisticsResult, StatType
 
 def format_csv(color_fns:ColorFns, heading:str, stat_order:[dict[str,float]], display_type:str, test_run:StatisticsResult)->str:
     rows = ''

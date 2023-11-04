@@ -1,2 +1,2 @@
 __all__ = ['BehavePerformance']
-from .runtime import BehavePerformance
+from behave_performance.runtime import BehavePerformance

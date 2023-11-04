@@ -1,6 +1,6 @@
 import re
 import datetime
-from helpers.datetime_format import js_to_python
+from behave_performance.helpers.datetime_format import js_to_python
 
 
 ARGUMENT_POSTFIX_PATTERN = r'([^|]+)\|(.*)'

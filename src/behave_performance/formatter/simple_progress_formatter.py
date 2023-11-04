@@ -1,7 +1,7 @@
 from behave_performance.formatter.base_formatter import Formatter
 from behave.model_core import Status
 from behave_performance.formatter.helpers.issue_helpers import CHARACTERS
-from events import PERF_EVENTS
+from behave_performance.events import PERF_EVENTS
 
 class SimpleProgressFormatter(Formatter):
     DEFAULT=True

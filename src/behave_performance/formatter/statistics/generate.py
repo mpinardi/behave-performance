@@ -1,6 +1,6 @@
 from behave.model_core import Status
 from datetime import timedelta
-from results import Result,GroupResult,ScenarioResult,StepResult,FeatureResult
+from behave_performance.results import Result,GroupResult,ScenarioResult,StepResult,FeatureResult
 from .statistics import StatTypes
 from .statistics_results import Issues,IssueException,StatisticsResult,StepStatistics,GroupStatistics,TestCaseStatistics
 

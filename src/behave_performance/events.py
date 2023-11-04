@@ -20,6 +20,9 @@ class PERF_EVENTS(Enum):
     SIMULATION_STATISTICS_FINISHED='simulation-statistics-finished'
     ADD_PLUGIN='add-plugin'
     CONFIG_STATISTICS = 'config-statistics'
+    FORMATTER_STARTED = 'formatter-started'
+    FORMATTER_FINISHED = 'formatter-finished'
+    ANNOUNCEMENT = 'announce'
 
 class RUN_EVENTS(Enum):
     SOURCE='source'

@@ -1,6 +1,6 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 from . import get_default_stats, get_default_stat_types
-from results import Result,GroupResult,ScenarioResult,StepResult,FeatureResult
+from behave_performance.results import Result,StepResult
 from behave.model import Status
 
 class GroupStatistics():

@@ -1,5 +1,5 @@
 from typing import Dict
-from formatter.statistics import StatType, StatisticsResult, GroupStatistics, TestCaseStatistics, StepStatistics, StatDataType
+from behave_performance.formatter.statistics import StatType, StatisticsResult, GroupStatistics, TestCaseStatistics, StepStatistics, StatDataType
 from datetime import timedelta
 
 

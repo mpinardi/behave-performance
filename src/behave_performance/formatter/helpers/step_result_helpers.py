@@ -1,6 +1,6 @@
 from behave.model_core import Status
 from behave.textutil import make_indentation, indent
-from formatter.color_fns import ColorTypes,ColorFns
+from behave_performance.formatter.color_fns import ColorTypes,ColorFns
 from .format_helpers import format_error
 
 
@@ -9,7 +9,8 @@ def get_failed_step_result_message(color_fns:ColorFns, issue):
     return format_error(issue.exception, color_fns)
 
 def get_pending_step_result_message(color_fns:ColorFns):
-    return color_fns.text(ColorTypes.UNTESTED)
+    message = 'Pending step. This implies that some issue occured.'
+    return color_fns.text(ColorTypes.UNTESTED,message)
 
 def get_step_messages(color_fns:ColorFns, test_step):
     messages = ''

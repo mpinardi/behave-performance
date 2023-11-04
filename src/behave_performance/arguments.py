@@ -143,8 +143,6 @@ def parse_arguments(args):
         '--i18n-keywords',
         help='list language keywords',
         required=False,
-        action='store_true',
-        default=False
     )
     perf.add_argument(
         '--i18n-languages',
@@ -214,22 +212,6 @@ def parse_arguments(args):
                                 argument it means a logical OR \
                                 (e.g. -t @TAG_1,@TAG_2 means \
                                 @TAG_1 OR @TAG_2)',
-        required=False,
-    )
-
-    behave.add_argument(
-        '--no_color',
-        help='Disable the use of ANSI color escapes.',
-        action='store_true',
-        dest="color",
-        required=False,
-    )
-    behave.add_argument(
-        '--color',
-        help='Use ANSI color escapes. This is the default '
-        'behaviour. This switch is used to override a '
-        'configuration file setting.',
-        action='store_true',
         required=False,
     )
     behave.add_argument(

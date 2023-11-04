@@ -26,7 +26,7 @@ Simulation Period: simulation sample
 	Total Runners: 10
 
 @sample2
-Simulation Period: simulation sample
+Simulation Period: simulation sample 2
 	Group 1
 	Group 2
 		Percentage: 30
@@ -40,7 +40,7 @@ Simulation Period: simulation sample
 	Random Wait: 00:00:02
 
 @sample3
-Simulation: simulation example
+Simulation: simulation sample example
 	Sample 1
 		%: 33
 	Sample 2

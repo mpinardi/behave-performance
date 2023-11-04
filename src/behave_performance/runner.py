@@ -1,10 +1,10 @@
 from multiprocessing import Queue
 from queue import Empty
 from behave.configuration import Configuration
-from _behave.perf_runner_builder import PerfRunnerBuilder
-from tasks import RUNNER_TASKS,task
+from ._behave.perf_runner_builder import PerfRunnerBuilder
+from behave_performance.tasks import RUNNER_TASKS,task
 from concurrent.futures import ThreadPoolExecutor
-from results import GroupResult
+from behave_performance.results import GroupResult
 from functools import partial
 from io import StringIO
 import sys

@@ -1,4 +1,3 @@
-import re
 from behave.tag_expression import make_tag_expression
 
 TAG_PATTERN = r'@(.*)(?=[ ,])|@.*(?=[@])|@.*'

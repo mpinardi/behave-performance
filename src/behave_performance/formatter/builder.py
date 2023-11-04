@@ -1,6 +1,6 @@
 import os
-from formatter.color_fns import ColorFns
-from formatter.announcement_formatter import AnnouncementFormatter
+from .color_fns import ColorFns
+from .announcement_formatter import AnnouncementFormatter
 from behave_performance.formatter.silent_progress_formatter import SilentProgressFormatter
 from behave_performance.formatter.simple_progress_formatter import SimpleProgressFormatter
 from behave_performance.formatter.progress_formatter import ProgressFormatter

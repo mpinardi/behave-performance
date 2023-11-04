@@ -1,10 +1,10 @@
 import asyncio
 import aiofiles
-from formatter.builder import PluginBuilder as FormatterBuilder
-from formatter.base_formatter import Formatter
-from formatter.helpers.output_path_helpers import get_path_with_prefix
-from option_spliter import split
-from helpers.paths import get_absolute_path
+from behave_performance.formatter.builder import PluginBuilder as FormatterBuilder
+from behave_performance.formatter.base_formatter import Formatter
+from behave_performance.formatter.helpers.output_path_helpers import get_path_with_prefix
+from behave_performance.option_spliter import split
+from behave_performance.helpers.paths import get_absolute_path
 
 class FormattersInitializer:
     def __init__(self, stdout, cwd, args):
@@ -17,16 +17,10 @@ class FormattersInitializer:
         self.silent_anouncements = getattr(args, 'silent_anouncements') if hasattr(args, 'silent_anouncements') else False
 
     async def initialize_formatters(self, event_broadcaster, format_options, formats, strict):
-        #add statistics
-        # has_stats = False
-        # for format in formats:
-        #     if 'statistics' in format:
-        #         has_stats = True
-        # if not has_stats:
-        #     formats.append('statistics')
-        self.formatters = await asyncio.gather(
-            *[self.initialize_formatter(event_broadcaster, split(format), strict, format_options) for format in formats]
-        )
+        if formats:
+            self.formatters = await asyncio.gather(
+                *[self.initialize_formatter(event_broadcaster, split(format), strict, format_options) for format in formats]
+            )
         for fc in Formatter.__subclasses__():
             if fc.DEFAULT:
                 found = False

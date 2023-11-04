@@ -1,24 +1,21 @@
-
-from helpers.paths import expand_plan_paths
-from helpers.simulation import get_simulations_from_filesystem
 import os
 import datetime
 import math
 import random
-import time
-
 import sys
-from formatter_init import FormattersInitializer
-
-from events import PERF_EVENTS, BEHAVE_EVENTS
+from behave_performance.helpers.paths import expand_plan_paths
+from behave_performance.helpers.simulation import get_simulations_from_filesystem, validate_simulation
+from behave_performance.formatter_init import FormattersInitializer
+from behave_performance.events import PERF_EVENTS, BEHAVE_EVENTS
+import behave_performance.i18n as i18n
 from pyee.asyncio import AsyncIOEventEmitter
 from behave.model_core import Status
-from runner import manager
-from tasks import RUNNER_TASKS
-from arguments import BEHAVE_ARGS, BEHAVE_PERFORMANCE_ARGS
-from results import Result
-from helpers.utils import set_interval_async
-from veggie_filter import VeggieFilter
+from behave_performance.runner import manager
+from behave_performance.tasks import RUNNER_TASKS
+from behave_performance.arguments import BEHAVE_ARGS, BEHAVE_PERFORMANCE_ARGS
+from behave_performance.results import Result
+from behave_performance.helpers.utils import set_interval_async
+from behave_performance.veggie_filter import VeggieFilter
 from datetime import timedelta, datetime
 from multiprocessing import Process, Queue, Pool, current_process, freeze_support, cpu_count
 import asyncio
@@ -43,15 +40,17 @@ class BehavePerformance(object):
     """
 
     def __init__(self, args):
-
-        # ee = EventEmitter()
         self.ee = AsyncIOEventEmitter()
-
         self.args = args
         self.ee.add_listener(PERF_EVENTS.CUKE_RUN_FINISHED,
                              self.__listener_cuke_finished)
-        self.simulations = get_simulations_from_filesystem(self.ee, args.language, expand_plan_paths(
-            args.plans), 'defined:none', VeggieFilter(args.plans, args.perf_name, args.plan_tags[0]))
+        self.ee.add_listener(PERF_EVENTS.FORMATTER_STARTED,
+                             self.__listener_formatter_started)
+        self.ee.add_listener(PERF_EVENTS.FORMATTER_FINISHED,
+                             self.__listener_formatter_finished)
+        self.formatters_running = []
+        self.simulations = get_simulations_from_filesystem(self.ee, self.args.language, expand_plan_paths(
+            self.args.plans), 'defined:none', VeggieFilter(self.args.plans, self.args.perf_name, self.args.plan_tags))
         self.results = []
         self.bargs = {}
         self.formatters = FormattersInitializer(sys.stdout,os.getcwd(),args)
@@ -62,6 +61,7 @@ class BehavePerformance(object):
         self.groups = {}
         self.processes = []  # [avaliable_threads,max_threads,process]
         self.cur_max_runners = 0
+        self.max_ramp_periods = 20
         self.max_runners = 0
         self.max_ran = 0
         self.running = 0
@@ -76,6 +76,15 @@ class BehavePerformance(object):
         self.scheduled_runtime = None
         self.ramper = None
         self.random_wait = 0
+    
+    async def cli_helpers(self) -> bool:
+        if self.args.i18n_keywords:
+            print(i18n.get_keywords(self.args.i18n_keywords))
+            return True
+        if self.args.i18n_languages:
+            print(i18n.get_languages())
+            return True
+        return False
 
     async def configure(self):
         format_options = {
@@ -83,7 +92,6 @@ class BehavePerformance(object):
             "cwd": os.getcwd(),
         }
         await self.formatters.initialize_formatters(self.ee,format_options,self.args.format,self.args.strict)
-        self.ee.emit(PERF_EVENTS.PERF_RUN_STARTED)
         self.bargs = {}
         for arg in BEHAVE_ARGS:
             value_arg = getattr(self.args, arg) if hasattr(
@@ -99,12 +107,21 @@ class BehavePerformance(object):
         self.bargs['quiet'] = True
         self.bargs['show_snippets'] = False
         self.bargs['show_skipped'] = False
+        # Validation simulations remove if issues
+        for sim in self.simulations:
+            validation = validate_simulation(sim['veggie'])
+            if validation[1]:
+                self.ee.emit(PERF_EVENTS.ANNOUNCEMENT,validation)
+            if not validation[0]:
+                self.simulations.remove(sim)
     
-        
     async def run(self):
+        if await(self.cli_helpers()):
+            return True
         await self.configure()
+        self.ee.emit(PERF_EVENTS.PERF_RUN_STARTED)
         result_queue = Queue()
-
+        
         for i, sim in enumerate(self.simulations):
             if i>0:
                 await self.formatters.update_formatters(i)
@@ -119,16 +136,22 @@ class BehavePerformance(object):
 
             for group in sim['veggie']['groups']:
                 g = dict(group)
+                if g['percentage']:
+                    precent = float(g['percentage'])
+                    precent = precent if precent < 1 else precent/100
+                    g['runners']=int((int(sim['veggie']['total_runners']) if sim['veggie']['total_runners'] else 10)* precent)
+                    if sim['veggie']['total_count']:
+                         g['count']=int((int(sim['veggie']['total_count']) if sim['veggie']['total_count'] else 10)* precent)
                 g['running'] = 0
                 g['ran'] = 0
                 g['max_runners'] = g['runners']
                 self.groups[g['id']] = g
-                self.max_runners = self.cur_max_runners+int(group['runners'])
+                self.max_runners = self.cur_max_runners+int(g['runners'])
                 self.cur_max_runners = self.max_runners
                 # TODO should this be set at all if in period
                 self.max_ran = self.max_ran + \
-                    int(group['count'] if group['count']
-                        is not None else group['runners'])
+                    int(g['count'] if g['count']
+                        is not None else g['runners'])
 
             self.executing = True
             listening = True
@@ -141,7 +164,7 @@ class BehavePerformance(object):
                 self.cur_percent = 0
                 self.end_ramp = self.__get_end(cur_time, self.ramp_up)
                 ramp_period = self.__get_ramp_period(
-                    (self.end_ramp - cur_time), max_ramp_periods)
+                    (self.end_ramp - cur_time), self.max_ramp_periods)
                 await self.__set_cur_group_threads(0)
                 self.ramper = await set_interval_async(ramp_period, self.__ramp)
 
@@ -195,7 +218,13 @@ class BehavePerformance(object):
             await asyncio.sleep(1)
             await self.__cleanup()
         self.ee.emit(PERF_EVENTS.PERF_RUN_FINISHED,self.results)
+        #Wait for formatters to complete before closing stream
+        while len(self.formatters_running):
+            await asyncio.sleep(0.1)
+        await asyncio.sleep(1)
+        #Close streams
         await self.formatters.close_streams()
+        return True
 
     async def __cleanup(self):
         for queue in self.task_queues:
@@ -219,7 +248,7 @@ class BehavePerformance(object):
                         self.end_ramp = self.__get_end(
                             cur_time, self.ramp_down)
                         ramp_period = self.__get_ramp_period(
-                            (self.end_ramp - cur_time), max_ramp_periods)
+                            (self.end_ramp - cur_time), self.max_ramp_periods)
                         self.ramper = await set_interval_async(ramp_period, self.__ramp)
 
             # are all runners runningramp_up
@@ -265,7 +294,13 @@ class BehavePerformance(object):
     async def __listener_cuke_finished(self, data):
         if self.executing:
             await self.__manage_run()
-
+    
+    async def __listener_formatter_started(self, data):
+        self.formatters_running.append(data)
+    
+    async def __listener_formatter_finished(self, data):
+        self.formatters_running.remove(data)
+    
     def __calculate_processes_threads(self, runners_max: int) -> [int]:
         procs_count = cpu_count()
         if runners_max < procs_count:
@@ -317,10 +352,10 @@ class BehavePerformance(object):
                 await self.__set_cur_group_threads(self.cur_percent)
             else:
                 if self.ramp_up is None:
-                    self.cur_percent -= 100 / max_ramp_periods
+                    self.cur_percent -= 100 / self.max_ramp_periods
                     self.ee.emit(PERF_EVENTS.RAMP_PRECENT,str(self.cur_percent))
                 else:
-                    self.cur_percent += 100 / max_ramp_periods
+                    self.cur_percent += 100 / self.max_ramp_periods
                     self.ee.emit(PERF_EVENTS.RAMP_PRECENT,str(self.cur_percent))
                 await self.__set_cur_group_threads(self.cur_percent)
             await self.__manage_run()

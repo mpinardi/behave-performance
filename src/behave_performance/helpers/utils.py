@@ -1,17 +1,10 @@
 
-"""testharness.utils
-
-Utils for general python testing.
-"""
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 # Imports
 # region
 import csv
-import datetime
 import json
 import os
-import random
-import string
 import threading
 import xml.etree.ElementTree as ET
 import asyncio

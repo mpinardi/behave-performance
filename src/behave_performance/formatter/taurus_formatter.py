@@ -1,7 +1,7 @@
 from behave_performance.formatter.helpers import format_csv
 from behave_performance.formatter.base_formatter import Formatter
 from behave_performance.formatter.statistics import StatDataType,StatTypes
-from events import PERF_EVENTS
+from behave_performance.events import PERF_EVENTS
 
 HEADER = 'label,avg_ct,avg_lt,avg_rt,bytes,concurrency,fail,stdev_rt,succ,throughput,perc_0.0,perc_50.0,perc_90.0,perc_95.0,perc_99.0,perc_99.9,perc_100.0,rc_200'
 
@@ -45,5 +45,7 @@ class TaurusFormatter(Formatter):
         self.event_broadcaster.emit(PERF_EVENTS.CONFIG_STATISTICS, 'prcntl','99.5')
 
     async def __log_final_stats(self, result):
+        self.event_broadcaster.emit(PERF_EVENTS.FORMATTER_STARTED, 'taurus')
         await self.log(format_csv(self.color_fns, HEADER,ORDER,StatDataType.SECONDS,result))
         await self.log('\n')
+        self.event_broadcaster.emit(PERF_EVENTS.FORMATTER_FINISHED, 'taurus')

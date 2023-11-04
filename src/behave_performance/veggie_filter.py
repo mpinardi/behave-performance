@@ -1,15 +1,15 @@
 import re
 import os
-import cucumber_tag_expressions as tag_expressions
+import cucumber_tag_expressions as cte
 
 PLAN_LINENUM_REGEXP = r'^(.*?)((?::[\d]+)+)?$'
 
 class VeggieFilter:
-    def __init__(self, plan_paths=None, names=None, tag_expression=None):
+    def __init__(self, plan_paths=None, names=None, tag_expressions:[]=None):
         self.plan_uri_to_lines_mapping = self.get_plan_uri_to_lines_mapping(
             plan_paths or [])
         self.names = names or []
-        self.tag_expression_node = tag_expressions.parse(tag_expression or '') if tag_expression else None
+        self.tag_expression_nodes = list(map(cte.parse,tag_expressions)) if tag_expressions else None
 
     def get_plan_uri_to_lines_mapping(self, plan_paths):
         mapping = {}
@@ -43,6 +43,6 @@ class VeggieFilter:
         return any(name in veggie['name'] for name in self.names)
 
     def matches_all_tag_expressions(self, veggie):
-        if not self.tag_expression_node:
+        if not self.tag_expression_nodes:
             return True
-        return self.tag_expression_node.evaluate([tag['name'] for tag in veggie['tags']])
+        return all(node.evaluate([tag['name'] for tag in veggie['tags']]) for node in self.tag_expression_nodes)

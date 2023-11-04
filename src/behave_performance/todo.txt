@@ -1,3 +1,0 @@
-Future version of behave:
-    Create plugin runner using the --runner argument to track stages of a features execution
-Lots of work.

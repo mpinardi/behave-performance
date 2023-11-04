@@ -26,6 +26,8 @@ class ColorFns:
         self.enabled = enabled
         self.perf_colors={
             "default": colors['black'],
+            "False": colors['red'],
+            "True": colors['black'],
             Status.failed.name: colors['red'],
             Status.executing.name: colors['green'],
             Status.untested.name: colors['yellow'],

@@ -1,12 +1,9 @@
 import re
-from collections import OrderedDict
 from behave.model import Status, Table, Row
 from behave.textutil import indent,make_indentation
-from .format_helpers import format_location
 from .step_result_helpers import get_step_messages
-from formatter.color_fns import ColorTypes
-from formatter.statistics import StepStatistics,GroupStatistics,TestCaseStatistics,IssueException,Issues
-#from behave.formatter.helpers import (StepIssue, format_location, get_step_keyword_type, get_step_keyword, indent)
+from behave_performance.formatter.color_fns import ColorTypes
+from behave_performance.formatter.statistics import StepStatistics,TestCaseStatistics
 
 CHARACTERS = {
     Status.failed.name: '+',#figures.cross,

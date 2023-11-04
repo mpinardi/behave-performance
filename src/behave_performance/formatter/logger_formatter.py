@@ -46,6 +46,7 @@ class LoggerFormatter(Formatter):
             self.event_broadcaster.add_listener(PERF_EVENTS.PERF_RUN_STARTED, self.__process_file)
     
     async def __run_start(self):
+        self.event_broadcaster.emit(PERF_EVENTS.FORMATTER_STARTED, 'logger')
         await self.log("{")
 
     async def __sim_start(self,name,date):
@@ -57,6 +58,7 @@ class LoggerFormatter(Formatter):
         await self.log("]")
     
     async def __run_stop(self,result):
+        self.event_broadcaster.emit(PERF_EVENTS.FORMATTER_FINISHED, 'logger')
         await self.log("}")
 
     async def log_to_file(self, data):

@@ -125,6 +125,10 @@ Follow directions in [wiki](https://github.com/mpinardi/behave-performance/wiki)
   Tar.gz
   >  pip install behave_performance-0.5.0.tar.gz
 
+## Run
+  From the commandline:
+  > py behave-performance --help
+
 ## Dev 
   ### Install
     From Pipfile
@@ -137,6 +141,7 @@ Follow directions in [wiki](https://github.com/mpinardi/behave-performance/wiki)
   
   ### Build
     You can build with setup.py
+    >  py -m build
     >  python setup.py sdist bdist_wheel
 
   ### Test

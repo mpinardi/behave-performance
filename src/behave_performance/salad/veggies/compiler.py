@@ -1,7 +1,6 @@
 import re
 
-from ..count_symbols import count_symbols
-from ..stream.id_generator import IdGenerator
+from behave_performance.salad.stream.id_generator import IdGenerator
 
 
 class Compiler(object):
@@ -78,7 +77,13 @@ class Compiler(object):
         }
         veggies.append(veggie)
     
-    def _apply_groups(self, veggies, veggie_groups):
+    def _apply_groups(self, veggies:list[dict], veggie_groups:list[dict]):
+        """Applys veggie_groups to veggies replacing any group text that is a reference.
+
+        Args:
+            veggies (list[dict]): The veggies in the plan
+            veggie_groups (list[dict]): The veggie_groups in the plan.
+        """
         types = {}
         if veggie_groups:
             for groups in veggie_groups:
@@ -87,7 +92,8 @@ class Compiler(object):
             for veggie in veggies:
                 for group in veggie['groups']:
                     if group['text'] in types:
-                        group['text'] = group['text']+'('+types[group['text']]+')'
+                        group['text'] = types[group['text']]
+                        #group['text'] = group['text']+'('+types[group['text']]+')'
          
 
     def _create_veggie_arguments(self, group, variables, values):

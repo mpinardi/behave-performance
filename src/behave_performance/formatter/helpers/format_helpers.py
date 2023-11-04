@@ -1,5 +1,5 @@
 import json
-from formatter.color_fns import ColorFns, ColorTypes
+from behave_performance.formatter.color_fns import ColorFns, ColorTypes
 from behave.textutil import indent, make_indentation
 
 def format_error(err, color_fns:ColorFns = ColorFns(True), should_inline_diff:bool=False ):
