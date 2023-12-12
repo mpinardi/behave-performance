@@ -1,26 +1,23 @@
 from __future__ import absolute_import, print_function, with_statement
 
 import os.path
-import six
-
-from behave_performance.testcase_filter import TestCaseFilter
-from .perf_runner import PerfRunner
-from .slice import Slice
+import copy
 from behave.runner import Context, path_getrootdir
 from behave.exception import ConfigError
-from behave.configuration import Configuration, LogLevel
+from behave.configuration import Configuration
 from behave.runner_util import \
     collect_feature_locations, parse_features, \
     exec_file, load_step_modules, PathManager
 from behave.step_registry import registry as the_step_registry
-from enum import Enum
+from behave_performance.testcase_filter import TestCaseFilter
+from .perf_runner import PerfRunner
+from .slice import Slice
+from .import pickle_copy_features
 
-if six.PY2:
-    # -- USE PYTHON3 BACKPORT: With unicode traceback support.
-    import traceback2 as traceback
-else:
-    import traceback
-
+# Possible issues with this setup:
+# * Hooks are shared
+# * Features are loaded and shared.
+# * Steps are loaded and shared
 
 class PerfRunnerBuilder():
     """Creates runners
@@ -154,7 +151,6 @@ class PerfRunnerBuilder():
     def feature_locations(self):
         return collect_feature_locations(self.config.paths)
 
-
     def setup(self):
         self.context = Context(self)
         self.setup_paths()
@@ -165,16 +161,24 @@ class PerfRunnerBuilder():
         # self.setup_capture()
         # self.run_hook("before_all", self.context)
         
-        feature_locations = [filename for filename in self.feature_locations()
+        self.feature_locations = [filename for filename in self.feature_locations()
                              if not self.config.exclude(filename)]
-        self.features = parse_features(feature_locations, language=self.config.lang)
+        # Would rather do this once.
+        self.features = parse_features(self.feature_locations, language=self.config.lang)
 
         # removeing streams...trying to nail this down.
         # self.config.reporters[0] = None
         # self.config.outputs[0] = None
 
     def build_runner(self,group):
-        fs = TestCaseFilter(self.features).filter(group['text'])
+        # Attempted multiple configurations for creating a pass by value copy of the features
+        #Opt0 - shared - This is fast but bad of course as its copy by reference. 20-25% faster
+        #Opt1 - parse - (21% slower than shared) This will cause lots of iops:
+        # features = parse_features(self.feature_locations, language=self.config.lang)
+        #Opt2 - deep copy - (25% slower than shared): features = deep_copy_features(self.features)
+        #Opt3 - pickle - (13% slower than shared): features = pickle_copy_features(self.features)
+        #features = pickle_copy_features(self.features)
+        fs = pickle_copy_features(TestCaseFilter(self.features).filter(group['text']))
         slice:Slice = self.get_slice(group)
         features = slice.parse_features(fs) if slice is not None else fs
         bargs = dict(self.config.defaults)
@@ -187,10 +191,10 @@ class PerfRunnerBuilder():
             **bargs,
         )
         if not config.format:
-            config.format = [config.default_format]
-        config.log_capture
-            
-        return  PerfRunner(group['id'],group['text'],config,features,the_step_registry,self.hooks)
+            config.format = []#config.default_format or 'plain'
+        # This does not seem strickly necessary
+        steps = copy.deepcopy(the_step_registry)
+        return  PerfRunner(group['id'],group['text'],config,features,steps,self.hooks)
     
     def get_slice(self,group):
         rows = []

@@ -1,7 +1,7 @@
 from behave_performance.formatter.base_formatter import Formatter
 from behave.model_core import Status
 from behave_performance.formatter.helpers.issue_helpers import CHARACTERS
-from behave_performance.events import PERF_EVENTS
+from behave_performance.events import PerfEvents
 
 class SimpleProgressFormatter(Formatter):
     DEFAULT=True
@@ -10,7 +10,7 @@ class SimpleProgressFormatter(Formatter):
 
     def __init__(self, options):
         super().__init__(options)
-        self.event_broadcaster.add_listener(PERF_EVENTS.CUKE_RUN_FINISHED, self.log_progress)
+        self.event_broadcaster.add_listener(PerfEvents.CUKE_RUN_FINISHED, self.log_progress)
 
     async def log_progress(self, data):
         status =  data['result'].get_meta_status() if 'result' in data else 'default'

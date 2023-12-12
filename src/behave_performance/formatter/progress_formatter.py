@@ -1,6 +1,6 @@
 from behave_performance.formatter.base_formatter import Formatter
 from behave.model_core import Status
-from behave_performance.events import PERF_EVENTS
+from behave_performance.events import PerfEvents
 
 class ProgressFormatter(Formatter):
     DEFAULT=False
@@ -9,8 +9,8 @@ class ProgressFormatter(Formatter):
 
     def __init__(self, options):
         super().__init__(options)
-        self.event_broadcaster.add_listener(PERF_EVENTS.CUKE_RUN_FINISHED, self.log_progress)
-        self.event_broadcaster.add_listener(PERF_EVENTS.CUKE_RUN_STARTED, self.log_progress)
+        self.event_broadcaster.add_listener(PerfEvents.CUKE_RUN_FINISHED, self.log_progress)
+        self.event_broadcaster.add_listener(PerfEvents.CUKE_RUN_STARTED, self.log_progress)
         self.groups = {}
         self.last_length = 0
         self.last_success = None

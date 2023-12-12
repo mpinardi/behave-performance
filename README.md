@@ -3,7 +3,7 @@
 A concurrent behavior driven testing(CBDT) tool and performance testing framework for Behave.
 
 ## What is Behave Performance?
-Behave_Performance is a tool to simulate concurrent user behavior using gherkin features as runner specification.
+Behave Performance is a tool to simulate concurrent user behavior using gherkin features as runner specification.
 
 ### What is Behave?
 Behave is a implementation of [Behavior Driven Development](https://en.wikipedia.org/wiki/Behavior-driven_development) [(BDD)](https://cucumber.io/docs/bdd/).

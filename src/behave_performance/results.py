@@ -1,12 +1,15 @@
-from datetime import datetime, timedelta
+from datetime import datetime
+import traceback as Traceback
 from behave.model import Feature, Scenario, ScenarioOutline, Step, Status,Table, Row
 from behave.model_core import FileLocation
-import traceback as Traceback
 
 
 class StepResult():
-
-    def __init__(self,  name:str, duration:float, status:str, location:FileLocation, keyword:str,step_type:str,table:Table,error_message:str,exception:Exception,traceback, hook_failed):
+    """The result of step's execution
+    """
+    def __init__(self,  name:str, duration:float, status:str, location:FileLocation,
+    keyword:str,step_type:str,table:Table,error_message:str,
+    exception:Exception,traceback, hook_failed):
         self.duration: float = duration
         self.name:str = name
         self.status:str = status
@@ -21,6 +24,15 @@ class StepResult():
 
     @classmethod
     def from_dict(cls, d: dict):
+        """Convert a dictionary representation of a step 
+            into a step result.
+
+        Args:
+            d (dict): A dict representation of a step.
+
+        Returns:
+            StepResult: The resulting step result object.
+        """
         duration = float(d['duration'])#timedelta(seconds=(d['duration']))
         name:str = d['name']
         status:str = d['status']
@@ -34,38 +46,58 @@ class StepResult():
         rows = []
         if d['table']:
             for r in d['table']['rows']:
-             rows.append(Row(r['headings'],r['cells'],r['line'],r['comments']))
+                rows.append(Row(r['headings'],r['cells'],r['line'],r['comments']))
         table:Table= Table(d['table']['headings'],d['table']['line'],rows) if d['table'] else None
         if (not exception and status=='failed'):
             pass
-        return cls(name,duration, status, location, keyword,step_type,table,error_message,exception,traceback, hook_failed)
-    
+        return cls(name,duration, status, location, keyword,step_type,table,
+        error_message,exception,traceback, hook_failed)
+
     @classmethod
     def from_step(cls, step:Step):
+        """Covert a step object into a step result.
+
+        Args:
+            step (Step): The step object to process.
+
+        Returns:
+            StepResult: The resulting step result.
+        """
         duration: float = step.duration
         name:str = step.name
         status:str = step.status.name
-        location:FileLocation = step.location 
-        error_message = step.error_message 
+        location:FileLocation = step.location
+        error_message = step.error_message
         exception: Exception = step.exception
         traceback = (Traceback.format_exception(step.exception) if step.exc_traceback else None)
-        hook_failed = step.hook_failed 
-        keyword = step.keyword 
-        step_type = step.step_type 
+        hook_failed = step.hook_failed
+        keyword = step.keyword
+        step_type = step.step_type
         table:Table= step.table
-        return cls(name,duration, status, location, keyword,step_type,table,error_message,exception,traceback, hook_failed)
- 
-class ScenarioResult():
+        return cls(name,duration, status, location, keyword,
+                   step_type,table,error_message,exception,traceback, hook_failed)
 
-    def __init__(self,  name:str, duration:float, steps:[StepResult],status:str, location:FileLocation):
+class ScenarioResult():
+    """Result of scenarios execution
+    """
+    def __init__(self,  name:str, duration:float, steps:[StepResult],
+        status:str, location:FileLocation):
         self.duration: float = duration
         self.steps: list[StepResult] = steps
         self.name:str = name
         self.status: str = status
         self.location:FileLocation = location
-    
+
     @classmethod
     def from_dict(cls, d: dict):
+        """Convert a dictionary representation of a scenario result into a ScenarioResult.
+
+        Args:
+            d (dict): The dictionary representation of a ScenarioResult.
+
+        Returns:
+            ScenarioResult: A scenario result object.
+        """
         duration: float = float(d['duration'])#timedelta(seconds=(d['duration']))
         steps: list[StepResult] = []
         name:str = d['name']
@@ -74,9 +106,17 @@ class ScenarioResult():
         for s in d['steps']:
             steps.append(StepResult.from_dict(s))
         return cls(name, duration, steps, status, location)
-    
+
     @classmethod
     def from_scenario(cls, scenario:Scenario):
+        """Convert a scenario into a ScenarioResult
+
+        Args:
+            scenario (Scenario): A scenario to process.
+
+        Returns:
+            ScenarioResult: A scenario result object.
+        """
         steps = []
         duration: float = scenario.duration
         steps: list[StepResult] = []
@@ -87,65 +127,11 @@ class ScenarioResult():
             steps.append(StepResult.from_step(s))
         return cls(name, duration, steps, status, location)
 
-# class FeatureResult():
-
-#     def __init__(self, feature: Feature):
-#         self.start: datetime = datetime.fromtimestamp(feature.run_starttime)
-#         self.stop: datetime = datetime.fromtimestamp(feature.run_endtime)
-#         self.duration: float = feature.duration
-#         self.test_cases: list[ScenarioResult] = []
-#         self.name = feature.name
-#         self.status = feature.status.name
-#         self.success = is_success(feature.status.name)
-
-#         for s in feature.scenarios:
-#             if type(s) is ScenarioOutline:
-#                 for so in s.scenarios:
-#                     self.test_cases.append(ScenarioResult(so))
-#             else:
-#                 self.test_cases.append(ScenarioResult(s))
-    
-#     @classmethod
-#     def get_instance(cls, d: dict):
-#         test_cases = []
-#         for res in d['test_cases']:
-#             test_cases.append(ScenarioResult.get_instance(res))
-#         return cls()
- 
-
-# class ScenarioResult():
-
-#     def __init__(self, scenario: Scenario):
-
-#         self.duration: float = scenario.duration
-#         self.steps: list[StepResult] = []
-#         self.name:str = scenario.name
-#         self.status: str = scenario.status.name
-#         self.location:FileLocation = scenario.location
-#         self.line:int = scenario.line
-#         for s in scenario.steps:
-#             self.steps.append(StepResult(s))
-    
-
-# class StepResult():
-
-#     def __init__(self, step: Step):
-#         self.duration: float = step.duration
-#         self.name:str = step.name
-#         self.status:str = step.status.name
-#         self.location:FileLocation = step.location
-#         self.line = step.line
-#         self.error_message = step.error_message
-#         self.exception: Exception = step.exception
-#         self.traceback = traceback.format_exception(step.exception) if step.exc_traceback else None
-#         self.hook_failed = step.hook_failed
-#         self.keyword = step.keyword
-#         self.step_type = step.step_type
-#         self.table:Table= step.
-
 class FeatureResult():
-
-    def __init__(self, name:str, start:datetime, stop:datetime, duration:float, test_cases:[ScenarioResult],success:bool,status:str):
+    """Result of a features execution.
+    """
+    def __init__(self, name:str, start:datetime, stop:datetime, duration:float,
+        test_cases:[ScenarioResult],success:bool,status:str):
         self.start: datetime = start
         self.stop: datetime = stop
         self.duration: float = duration
@@ -156,6 +142,14 @@ class FeatureResult():
 
     @classmethod
     def from_dict(cls, d: dict):
+        """Create a feature result from a dictionary.
+
+        Args:
+            d (dict): THe dictionary representation of the FeatureResult.
+
+        Returns:
+            FeatureResult: The resulting feature result.
+        """
         test_cases = []
         start: datetime = datetime.fromisoformat(d['start'])
         stop: datetime = datetime.fromisoformat(d['stop'])
@@ -166,9 +160,17 @@ class FeatureResult():
         for s in d['test_cases']:
             test_cases.append(ScenarioResult.from_dict(s))
         return cls(name,start,stop,duration,test_cases,success,status)
-    
+
     @classmethod
     def from_feature(cls, feature:Feature):
+        """Create a feature result from a feature.
+
+        Args:
+            feature (Feature): A feature which has been executed.
+
+        Returns:
+            FeatureResult: A feature result version of the feature.
+        """
         start: datetime = datetime.fromtimestamp(feature.run_starttime)
         stop: datetime = datetime.fromtimestamp(feature.run_endtime)
         duration: float = feature.duration
@@ -178,27 +180,31 @@ class FeatureResult():
         success = is_success(feature.status.name)
 
         for s in feature.scenarios:
-            if type(s) is ScenarioOutline:
+            if isinstance(s,ScenarioOutline.__class__):
                 for so in s.scenarios:
                     test_cases.append(ScenarioResult.from_scenario(so))
             else:
                 test_cases.append(ScenarioResult.from_scenario(s))
         return cls(name,start,stop,duration,test_cases,success,status)
- 
-
 
 class GroupResult():
-
-    def __init__(self, id:str, name:str, features: list[FeatureResult], success: bool):
+    """The result of a group's execution.
+    """
+    def __init__(self, uid:str, name:str, features: list[FeatureResult], success: bool):
         self.name:name = name
-        self.id:str = id
+        self.id:str = uid
         self.success:bool = success
         self.start:datetime = features[0].start
         self.stop:datetime = features[-1].stop
         self.duration:float = (features[-1].stop - features[0].start).total_seconds()
         self.results:list[FeatureResult] = features
-    
+
     def get_meta_status(self)->str:
+        """Get the worst status for this group.
+
+        Returns:
+            str: The status with the highest number.
+        """
         feature:FeatureResult
         status = Status.untested
         for feature in self.results:
@@ -209,21 +215,40 @@ class GroupResult():
 
     @classmethod
     def from_dict(cls, d: dict):
+        """From dictionary to Group Result.
+
+        Args:
+            d (dict): A dictoionary of the group result.
+
+        Returns:
+            GroupResult: The resulting GroupResult object.
+        """
         features = []
         for res in d['results']:
             features.append(FeatureResult.from_dict(res))
         return cls(d['id'],d['name'],features,d['success'])
-    
+
     @classmethod
-    def from_features(cls, id:str, name:str, features: list[Feature], success: bool):
+    def from_features(cls, uid:str, name:str, features: list[Feature], success: bool):
+        """Createa a group result from list of features.
+
+        Args:
+            uid (str): The uid of the group
+            name (str): The name of the group
+            features (list[Feature]): The result of the group as a list of features.
+            success (bool): If the result was a success.
+
+        Returns:
+           GroupResult: Returns a group result.
+        """
         feature_results = []
         for f in features:
             feature_results.append(FeatureResult.from_feature(f))
-        return cls(id,name,feature_results,success)
-    
-    
-class Result():
+        return cls(uid,name,feature_results,success)
 
+class Result():
+    """Result of a complete simulation run.
+    """
     def __init__(self, name: str, start: datetime, stop:datetime=None, duration:float=None, groups:dict=None,success:bool=True):
         self.start = start
         self.stop: datetime = stop
@@ -236,16 +261,26 @@ class Result():
         self.success = success
 
     def add_group_result(self, result:GroupResult):
+        """Add group result to result.
+
+        Args:
+            result (GroupResult): The group result to add.
+        """
         if result.name in self.groups:
             self.groups.get(
                 result.name).append(result)
         else:
             self.groups[result.name] = [result]
-    
 
 def is_success(status:str):
+    """Check if status is success.
+
+    Args:
+        status (str): The status string.
+
+    Returns:
+        bool: True if success else false.
+    """
     if status in (Status.executing.name ,Status.failed.name, Status.undefined.name):
         return False
     return True
-
-

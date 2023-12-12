@@ -7,6 +7,10 @@
 from __future__ import absolute_import
 
 import argparse
+import json
+import sys
+import behave_performance.i18n as i18n
+
 
 BEHAVE_ARGS = [
     'dry_run',
@@ -59,23 +63,55 @@ BEHAVE_ARGS = [
 ]
 
 BEHAVE_PERFORMANCE_ARGS = [
-    'perf-dry_run',
+    'perf-dry-run',
     'format',
     'format-options',
     'i18n-keywords',
     'i18n-languages',
     'language',
-    'no-strict-stats',
+    'strict',
     'no-format-color',
     'silent',
     'silent-progress',
-    'silent-anouncement',
+    'silent-announcements',
     'plans',
     'plan-tags',
     'perf-name',
     'profile'
-
 ]
+
+class UpdateDict(argparse.Action):
+    def __init__(self,
+                 option_strings,
+                 dest,
+                 nargs=None,
+                 const=None,
+                 default=None,
+                 type=None,
+                 choices=None,
+                 required=False,
+                 help=None,
+                 metavar=None):
+        if nargs == 0:
+            raise ValueError('nargs for append actions must be != 0; if arg '
+                             'strings are not supplying the value to append, '
+                             'the append const action may be more appropriate')
+        super(UpdateDict,self).__init__(
+            option_strings=option_strings,
+            dest=dest,
+            nargs=nargs,
+            const=const,
+            default=default,
+            type=type,
+            choices=choices,
+            required=required,
+            help=help,
+            metavar=metavar)
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        items = getattr(namespace, self.dest, None)
+        items.update(values)
+        setattr(namespace, self.dest, items)
 
 
 def parse_arguments(args):
@@ -90,17 +126,18 @@ def parse_arguments(args):
         '--plans',
         action='append',
         help='The folder location of the plans you wish to run or a plan file name.',
-        required=True,
+        required=False,
         metavar="FILE"
     )
     perf.add_argument(
         '--perf-dry-run',
         action='store_true',
-        help='Invokes formatters without executing the a plan.',
+        help='Invokes formatters without executing the behave.',
         required=False,
     )
     perf.add_argument(
         '--no-strict-stats',
+        '--strict',
         help='enable including failed results in statistics',
         required=False,
         dest='strict',
@@ -135,9 +172,11 @@ def parse_arguments(args):
     )
     perf.add_argument(
         '--format-options',
-        help='Provide options for formatters (repeatable)',
-        action='append',
-        required=False
+        help='Provide options for formatters passed to all.(repeatable)',
+        action=UpdateDict,
+        type=json.loads,
+        default = {},
+        required = False
     )
     perf.add_argument(
         '--i18n-keywords',
@@ -190,6 +229,9 @@ def parse_arguments(args):
 
     # ------------------- Behave arguments -------------------#
     behave = parser.add_argument_group('Behave Specific Arguments','Configurations specific to behave.')
+    behave.add_argument('filename',
+                        nargs='*',
+                        help="Feature directory, file or file-location (FILE:LINE).")
     behave.add_argument(
         '-d',
         '--dry-run',
@@ -197,7 +239,6 @@ def parse_arguments(args):
         help='Invokes formatters without executing the steps.',
         required=False,
     )
-    behave.add_argument('filename')
     behave.add_argument(
         '-t',
         '--tags',
@@ -322,6 +363,18 @@ def parse_arguments(args):
     )
 
     result = parser.parse_args(args)
-    
-    return result
 
+    if result.plans is None and (result.i18n_keywords is None and result.i18n_languages is False):
+        parser.error("Plans argument --plan is required for running tests.")
+    if not result.filename and (result.i18n_keywords is None and not result.i18n_languages and not result.perf_dry_run):
+        parser.error("The positional behave path (FEATURE_FILE:LINE) argument is required for running tests.")
+    exit = False
+    if result.i18n_keywords:
+        print(i18n.get_keywords(result.i18n_keywords))
+        exit = True
+    if result.i18n_languages:
+        print(i18n.get_languages())
+        exit = True
+    if exit:
+        sys.exit(0)
+    return result

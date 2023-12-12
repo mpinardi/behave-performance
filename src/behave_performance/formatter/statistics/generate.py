@@ -6,7 +6,7 @@ from .statistics_results import Issues,IssueException,StatisticsResult,StepStati
 
 
 async def generate_default_statistics(data:Result, is_strict, period_start, period_stop):
-    calculated_result = StatisticsResult(data)
+    calculated_result = StatisticsResult(data,is_strict)
     for key in data.groups:
         calculated_result.groups.append(await calculate_group(data.groups[key], is_strict, period_start, period_stop))
     return calculated_result
@@ -65,7 +65,7 @@ async def calculate_group(group_results:GroupResult, is_strict, period_start, pe
                     for ts in tc.steps:
                         cts = next((item for item in ctc.steps if item.name == ts.name), None)
                         if cts is None:
-                            cts = StepStatistics(ts)
+                            cts = StepStatistics(ts,is_strict)
                             ctc.steps.append(cts)
                         if is_status_failure(ts.status) or is_status_warning(ts.status):
                             result.has_issues = True

@@ -1,3 +1,13 @@
 {
-    "python.pythonPath": "C:\\Users\\mpina\\.virtualenvs\\behave-performance-_RTS-4TA\\Scripts\\python.exe"
+    "python.pythonPath": "C:\\Users\\mpina\\.virtualenvs\\behave-performance-_RTS-4TA\\Scripts\\python.exe",
+    "python.linting.pylintPath": "C:\\Users\\mpina\\.virtualenvs\\behave-performance-_RTS-4TA\\Scripts\\pylint.exe" ,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./test/behave_performance",
+        "-p",
+        "test_*.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestEnabled": true
 }

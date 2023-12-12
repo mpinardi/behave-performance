@@ -1,9 +1,22 @@
 from behave_performance.salad.stream.source_events import SourceEvents
 from behave_performance.salad.stream.salad_events import SaladEvents
+from behave_performance.veggie_filter import VeggieFilter
 import math
 import random
 
-def get_simulations_from_filesystem(event_broadcaster, language, plan_paths, order, veggie_filter):
+def get_simulations_from_filesystem(event_broadcaster, language:str, plan_paths:[str], order:str, veggie_filter:VeggieFilter)-> list:
+    """Get simulations from the file system.
+
+    Args:
+        event_broadcaster (AsyncIOEventEmitter): The event broadcaster to use.
+        language (str): The language code of the langauge to read the simulations in.
+        plan_paths ([str]): All plan paths.
+        order (str): The order to use for simulations.
+        veggie_filter (VeggieFilter): The veggie filter to use to filter out simulations.
+
+    Returns:
+        _type_: _description_
+    """
     result = []
     for plan_path in plan_paths:
         source_events = SourceEvents([plan_path])        
@@ -13,7 +26,21 @@ def get_simulations_from_filesystem(event_broadcaster, language, plan_paths, ord
     return result
 
 
-def get_simulations(event_broadcaster, language, veggie_filter, source_event):
+def get_simulations(event_broadcaster, language:str, veggie_filter:VeggieFilter, source_event:dict) -> list:
+    """Get simulations from the source events. Broadcasts messages related to source events.
+
+    Args:
+        event_broadcaster (AsyncIOEventEmitter): The event broadcaster to use.
+        language (str): The language code of the langauge to read the simulations in.
+        veggie_filter (VeggieFilter): The veggie filter to use to filter out simulations.
+        source_event (dict): A source event to process.
+
+    Raises:
+        Exception: _description_
+
+    Returns:
+        _type_: _description_
+    """
     result = []
     uri = source_event['source']['uri']
     salad_events = SaladEvents(language)
@@ -34,7 +61,7 @@ def get_simulations(event_broadcaster, language, veggie_filter, source_event):
             raise Exception(f'Parse error in \'{uri}\': {event.data}')
     return result
 
-def validate_simulation(veggie:dict):
+def validate_simulation(veggie:dict)-> tuple[bool, dict]:
     """There is one case where a simulation might be gramaticaly correct but not have needed fields
 
     Args:
@@ -68,7 +95,16 @@ def validate_simulation(veggie:dict):
     return (is_valid,messages)
 
 
-def order_simulations(simulations, order):
+def order_simulations(simulations:[dict], order:str):
+    """Orders simulations in random order with seeds or leaves it alone.
+
+    Args:
+        simulations ([dict]): A list of simulations
+        order (str): A type of order. Options are "defined" or "random". For random you can provide a seed using the format "random:200".
+
+    Raises:
+        Exception: Bad type was provided
+    """
     if ':' in order:
         type, seed = order.split(':')
     else:
@@ -80,6 +116,6 @@ def order_simulations(simulations, order):
         if seed is None:
             seed = str(math.floor(math.random() * 1000 * 1000))
             print(f'Random order using seed: {seed}')
-        random.shuffle(simulations, seed)
+        random.shuffle(simulations, float(seed))
     else:
         raise Exception('Unrecognized order type. Should be `defined` or `random`')

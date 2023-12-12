@@ -2,7 +2,7 @@ import json
 import datetime
 import aiofiles
 from behave_performance.formatter.base_formatter import Formatter
-from behave_performance.events import PERF_EVENTS
+from behave_performance.events import PerfEvents
 from behave_performance.results import Result, GroupResult
 from behave_performance.helpers.paths import get_absolute_path
 import dataclasses, json
@@ -37,16 +37,16 @@ class LoggerFormatter(Formatter):
         if self.is_stdio() and len(self.options) == 0:
             self.log('No output path was specified! Unable to log plan execution results.')
         elif not self.is_stdio():
-            self.event_broadcaster.add_listener(PERF_EVENTS.PERF_RUN_STARTED, self.__run_start)
-            self.event_broadcaster.add_listener(PERF_EVENTS.SIMULATION_RUN_STARTED, self.__sim_start)
-            self.event_broadcaster.add_listener(PERF_EVENTS.CUKE_RUN_FINISHED, self.log_to_file)
-            self.event_broadcaster.add_listener(PERF_EVENTS.SIMULATION_RUN_FINISHED, self.__sim_stop)
-            self.event_broadcaster.add_listener(PERF_EVENTS.PERF_RUN_FINISHED, self.__run_stop)
+            self.event_broadcaster.add_listener(PerfEvents.PERF_RUN_STARTED, self.__run_start)
+            self.event_broadcaster.add_listener(PerfEvents.SIMULATION_RUN_STARTED, self.__sim_start)
+            self.event_broadcaster.add_listener(PerfEvents.CUKE_RUN_FINISHED, self.log_to_file)
+            self.event_broadcaster.add_listener(PerfEvents.SIMULATION_RUN_FINISHED, self.__sim_stop)
+            self.event_broadcaster.add_listener(PerfEvents.PERF_RUN_FINISHED, self.__run_stop)
         if len(self.options) > 0:
-            self.event_broadcaster.add_listener(PERF_EVENTS.PERF_RUN_STARTED, self.__process_file)
+            self.event_broadcaster.add_listener(PerfEvents.PERF_RUN_STARTED, self.__process_file)
     
     async def __run_start(self):
-        self.event_broadcaster.emit(PERF_EVENTS.FORMATTER_STARTED, 'logger')
+        self.event_broadcaster.emit(PerfEvents.FORMATTER_STARTED, 'logger')
         await self.log("{")
 
     async def __sim_start(self,name,date):
@@ -58,7 +58,7 @@ class LoggerFormatter(Formatter):
         await self.log("]")
     
     async def __run_stop(self,result):
-        self.event_broadcaster.emit(PERF_EVENTS.FORMATTER_FINISHED, 'logger')
+        self.event_broadcaster.emit(PerfEvents.FORMATTER_FINISHED, 'logger')
         await self.log("}")
 
     async def log_to_file(self, data):
@@ -75,5 +75,5 @@ class LoggerFormatter(Formatter):
             result.duration = result.stop - result.stop
             for group in value:
                 result.add_group_result(GroupResult.from_dict(group['result']))
-            self.event_broadcaster.emit(PERF_EVENTS.SIMULATION_RUN_FINISHED, result)
+            self.event_broadcaster.emit(PerfEvents.SIMULATION_RUN_FINISHED, result)
         return True

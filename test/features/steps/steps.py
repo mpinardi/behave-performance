@@ -9,7 +9,7 @@ def wait(context, num):
 
 @when(u'Check {num}')
 def check(context,num):
-    pass
+    assert int(num)
 
 @when(u'System out "{value}"')
 def sys_out(context,value):
@@ -21,7 +21,7 @@ def has_veg(context):
 
 @when(u'Make a meal')
 def make_meal(context):
-    make = meal
+   raise Exception("What Meal?")
 
 @then(u'Verify successful')
 def is_suc(context):

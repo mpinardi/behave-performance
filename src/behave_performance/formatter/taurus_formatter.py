@@ -1,7 +1,7 @@
 from behave_performance.formatter.helpers import format_csv
 from behave_performance.formatter.base_formatter import Formatter
 from behave_performance.formatter.statistics import StatDataType,StatTypes
-from behave_performance.events import PERF_EVENTS
+from behave_performance.events import PerfEvents
 
 HEADER = 'label,avg_ct,avg_lt,avg_rt,bytes,concurrency,fail,stdev_rt,succ,throughput,perc_0.0,perc_50.0,perc_90.0,perc_95.0,perc_99.0,perc_99.9,perc_100.0,rc_200'
 
@@ -34,18 +34,18 @@ class TaurusFormatter(Formatter):
         super().__init__(options)
         if not self.is_stdio():
             self.color_fns.disable()
-        self.event_broadcaster.add_listener(PERF_EVENTS.SIMULATION_STATISTICS_FINISHED, self.__log_final_stats)
-        self.event_broadcaster.add_listener(PERF_EVENTS.PERF_RUN_STARTED, self.__config_statistics)
+        self.event_broadcaster.add_listener(PerfEvents.SIMULATION_STATISTICS_FINISHED, self.__log_final_stats)
+        self.event_broadcaster.add_listener(PerfEvents.PERF_RUN_STARTED, self.__config_statistics)
 
     async def __config_statistics(self):
-        self.event_broadcaster.emit(PERF_EVENTS.CONFIG_STATISTICS, 'prcntl','50')
-        self.event_broadcaster.emit(PERF_EVENTS.CONFIG_STATISTICS, 'prcntl','90')
-        self.event_broadcaster.emit(PERF_EVENTS.CONFIG_STATISTICS, 'prcntl','95')
-        self.event_broadcaster.emit(PERF_EVENTS.CONFIG_STATISTICS, 'prcntl','99')
-        self.event_broadcaster.emit(PERF_EVENTS.CONFIG_STATISTICS, 'prcntl','99.5')
+        self.event_broadcaster.emit(PerfEvents.CONFIG_STATISTICS, 'prcntl','50')
+        self.event_broadcaster.emit(PerfEvents.CONFIG_STATISTICS, 'prcntl','90')
+        self.event_broadcaster.emit(PerfEvents.CONFIG_STATISTICS, 'prcntl','95')
+        self.event_broadcaster.emit(PerfEvents.CONFIG_STATISTICS, 'prcntl','99')
+        self.event_broadcaster.emit(PerfEvents.CONFIG_STATISTICS, 'prcntl','99.5')
 
     async def __log_final_stats(self, result):
-        self.event_broadcaster.emit(PERF_EVENTS.FORMATTER_STARTED, 'taurus')
+        self.event_broadcaster.emit(PerfEvents.FORMATTER_STARTED, 'taurus')
         await self.log(format_csv(self.color_fns, HEADER,ORDER,StatDataType.SECONDS,result))
         await self.log('\n')
-        self.event_broadcaster.emit(PERF_EVENTS.FORMATTER_FINISHED, 'taurus')
+        self.event_broadcaster.emit(PerfEvents.FORMATTER_FINISHED, 'taurus')

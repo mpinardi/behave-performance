@@ -1,6 +1,8 @@
 from enum import Enum
 
-class task():
+class Task():
+    """
+    """
     def __init__ (self,task:str,message:object):
         self.task = task
         self.message = message
@@ -15,5 +17,5 @@ class RUNNER_TASKS(Enum):
     def __init__ (self, type:str):
         self.type = type
 
-    def create(self,message:object='')-> task:
-        return task(self.type,message)
+    def create(self,message:object='')-> Task:
+        return Task(self.type,message)

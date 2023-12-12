@@ -94,21 +94,21 @@ Simulation Period: simulation 2 period
 Group test.feature
 	|value out|
 	|changed value |
-		Threads: 25
+		Threads: 50
 Group test1.feature
 	|value out|
 	|changed value |
-		Threads: 25
+		Threads: 50
 Group test2.feature
 	|value out|
 	|changed value |
-		Threads: 25
+		Threads: 50
 		#count is ignored in a simulation period
 		Count: 1
 Group test3.feature
 	|value out|
 	|changed value |
-		Threads: 25
+		Threads: 50
 		#count is ignored in a simulation period
 		Count: 1
 #run time
@@ -130,4 +130,18 @@ Group test3.feature
 		Count: 1
 #! No run time
 Time: 00:00:30
+RampDown: 00:00:10
+
+@tskip
+@simperiodtest4
+Simulation Period: simulation 4 period
+Group test1.feature
+	Threads: 200
+Group test2.feature
+	Threads: 200
+Group test3.feature
+	Threads: 200
+#run time
+Time: 00:01:00
+RampUp: 00:00:10
 RampDown: 00:00:10

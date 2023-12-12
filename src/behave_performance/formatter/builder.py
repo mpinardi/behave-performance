@@ -18,7 +18,10 @@ from behave_performance.formatter.base_formatter import Formatter
 class PluginBuilder:
     @staticmethod
     def build(type, options):
-        FormatterClass = PluginBuilder.get_constructor_by_type(type, options)
+        try:
+            FormatterClass = PluginBuilder.get_constructor_by_type(type, options)
+        except ModuleNotFoundError:
+            return
         extended_options = {
             'color_fns': ColorFns(options['colors_enabled']),
             **options,
@@ -39,6 +42,7 @@ class PluginBuilder:
             'stddev': StdDeviationCreator,
             'stdev': StdDeviationCreator,
             'chartpoints': ChartPointsFormatter,
+            'chart_points': ChartPointsFormatter,
             'logger': LoggerFormatter,
             'taurus': TaurusFormatter
         }

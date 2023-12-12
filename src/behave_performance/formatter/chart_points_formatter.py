@@ -27,8 +27,8 @@ class ChartPointsFormatter(Formatter):
                 m = MinionOptionSplitter.split(option, options)
                 if pb.is_minion(m['type'],options):
                     self.plugin_minions.append(m)
-        from ..runtime import PERF_EVENTS
-        self.event_broadcaster.add_listener(PERF_EVENTS.SIMULATION_RUN_FINISHED, self.process_data)
+        from ..runtime import PerfEvents
+        self.event_broadcaster.add_listener(PerfEvents.SIMULATION_RUN_FINISHED, self.process_data)
 
     async def process_data(self, data):
         self.event_broadcaster.emit('formatter-started', 'chartpoints')

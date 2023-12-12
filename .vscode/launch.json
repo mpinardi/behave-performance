@@ -5,13 +5,44 @@
     //"-f=progress","-f=statistics::prctl:70,prctl:95.5","-f=summary","-f=taurus:C:/test/taurus|_@HHmmss.csv","-f=chartpoints:C:/test/chartpoints|_@HHmmss.csv"
     "version": "0.2.0",
     "configurations": [
-
+        {
+            "name": "Python: Debug Tests",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "purpose": ["debug-test"],
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "presentation": {
+                "hidden": true, // keep original launch order in 'run and debug' tab
+            }
+        },
         {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal"
+        },
+        {
+            "name": "Behave Performance DryRun",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/src",
+            "module": "behave_performance",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "args": ["-p=../test/plans","../test/features","--perf-dry-run", "--plan-tags=@simple"]
+        },
+        {
+            "name": "Behave Performance Languages Only",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/src",
+            "module": "behave_performance",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "args": ["--i18n-languages"]
         },
         {
             "name": "Behave Performance Language",
@@ -31,7 +62,7 @@
             "module": "behave_performance",
             "console": "integratedTerminal",
             "justMyCode": false,
-            "args": ["-p=../test/plans","../test/features","-f=statistics::prctl:70,prctl:95.5","--plan-tags=@simple","-f=progress","-f=summary"]
+            "args": ["-p=../test/plans","../test/features","-f=statistics::prctl:70,prctl:95.5","--plan-tags=@simple","-f=progress","-f=summary","--no-strict"]
         },
         {
             "name": "Behave Performance PerfName",
@@ -71,7 +102,7 @@
             "module": "behave_performance",
             "console": "integratedTerminal",
             "justMyCode": false,
-            "args": ["-p=../test/plans","../test/features","--plan-tags=@simperiodtest","-f=progress","-f=statistics::prctl:70,prctl:95.5","-f=summary","-f=taurus:C:/test/taurus|_@HHmmss.csv","-f=chartpoints:C:/test/chartpoints|_@HHmmss.csv"]
+            "args": ["-p=../test/plans","../test/features","--plan-tags=@simperiodtest4","-f=progress","-f=statistics::prctl:70,prctl:95.5","-f=summary","-f=taurus:C:/test/taurus|_@HHmmss.csv","-f=chartpoints:C:/test/chartpoints|_@HHmmss.csv"]
         },
         {
             "name": "Python: Behave current file",

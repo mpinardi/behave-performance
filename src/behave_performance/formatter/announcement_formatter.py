@@ -1,7 +1,7 @@
 from behave_performance.formatter.base_formatter import Formatter
 from behave.model_core import Status
 from behave_performance.formatter.helpers.issue_helpers import CHARACTERS
-from behave_performance.events import PERF_EVENTS
+from behave_performance.events import PerfEvents
 
 class AnnouncementFormatter(Formatter):
     DEFAULT=True
@@ -11,10 +11,10 @@ class AnnouncementFormatter(Formatter):
     def __init__(self, options):
         super().__init__(options)
         self.name = ''
-        self.event_broadcaster.add_listener(PERF_EVENTS.PERF_RUN_STARTED, self.perf_run_start)
-        self.event_broadcaster.add_listener(PERF_EVENTS.SIMULATION_RUN_STARTED, self.sim_run_start)
-        self.event_broadcaster.add_listener(PERF_EVENTS.SIMULATION_RUN_FINISHED, self.sim_run_stop)
-        self.event_broadcaster.add_listener(PERF_EVENTS.ANNOUNCEMENT, self.announce)
+        self.event_broadcaster.add_listener(PerfEvents.PERF_RUN_STARTED, self.perf_run_start)
+        self.event_broadcaster.add_listener(PerfEvents.SIMULATION_RUN_STARTED, self.sim_run_start)
+        self.event_broadcaster.add_listener(PerfEvents.SIMULATION_RUN_FINISHED, self.sim_run_stop)
+        self.event_broadcaster.add_listener(PerfEvents.ANNOUNCEMENT, self.announce)
 
     async def announce(self,data):
         await self.log(self.color_fns.text(str(data[0]),str(data[1])))

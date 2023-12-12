@@ -10,7 +10,7 @@ class StatisticsFormatter(Formatter):
     SINGLETON=True
 
     def __init__(self, options):
-        from behave_performance.runtime import PERF_EVENTS
+        from behave_performance.runtime import PerfEvents
         from behave_performance.formatter.builder import PluginBuilder as pb
         super().__init__(options)
         self.plugin_minions = []
@@ -19,15 +19,15 @@ class StatisticsFormatter(Formatter):
             if pb.is_minion(m['type'],options):
                 self.plugin_minions.append(m)
         self.calculated_result = None
-        self.event_broadcaster.add_listener(PERF_EVENTS.SIMULATION_RUN_FINISHED, self.generate_statistics)
-        self.event_broadcaster.add_listener(PERF_EVENTS.CONFIG_STATISTICS, self.config)
+        self.event_broadcaster.add_listener(PerfEvents.SIMULATION_RUN_FINISHED, self.generate_statistics)
+        self.event_broadcaster.add_listener(PerfEvents.CONFIG_STATISTICS, self.config)
     
     async def generate_statistics(self, data):
-        from behave_performance.runtime import PERF_EVENTS
-        self.event_broadcaster.emit(PERF_EVENTS.SIMULATION_STATISTICS_STARTED)
+        from behave_performance.runtime import PerfEvents
+        self.event_broadcaster.emit(PerfEvents.SIMULATION_STATISTICS_STARTED)
         self.calculated_result = await generate_default_statistics(data, self.strict, None, None)
         await self.run_minions()
-        self.event_broadcaster.emit(PERF_EVENTS.SIMULATION_STATISTICS_FINISHED, self.calculated_result)
+        self.event_broadcaster.emit(PerfEvents.SIMULATION_STATISTICS_FINISHED, self.calculated_result)
 
     async def config(self, setting, value):
         from .builder import PluginBuilder as pb

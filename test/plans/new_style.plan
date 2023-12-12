@@ -40,7 +40,7 @@ Simulation Period: simulation sample 2
 	Random Wait: 00:00:02
 
 @sample3
-Simulation: simulation sample example
+Simulation: simulation ex sample example
 	Sample 1
 		%: 33
 	Sample 2
@@ -56,4 +56,18 @@ Simulation: simulation sample example
 	RampDown: 00:00:10
 	#a optional random wait mean for before thread runs tests.
 	#thread will wait between +-50% of this mean
-	
+
+
+@sample4
+Simulation Period: 4 sample 4
+	Sample 1
+		Percentage: 30
+	Sample 2
+		Percentage: 30
+	Sample 3
+		Percentage: 40
+	#Requires a time attribute
+	Time: 00:00:30
+	Total Runners: 30
+	RampUp: 00:00:10
+	RampDown: 00:00:10

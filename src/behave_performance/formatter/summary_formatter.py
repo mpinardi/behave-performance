@@ -11,8 +11,8 @@ class SummaryFormatter(Formatter):
 
     def __init__(self, options):
         super().__init__(options)
-        from behave_performance.runtime import PERF_EVENTS
-        self.event_broadcaster.add_listener(PERF_EVENTS.SIMULATION_STATISTICS_FINISHED, self.log_summary)
+        from behave_performance.runtime import PerfEvents
+        self.event_broadcaster.add_listener(PerfEvents.SIMULATION_STATISTICS_FINISHED, self.log_summary)
 
     async def log_summary(self, result:StatisticsResult):
         self.event_broadcaster.emit('formatter-started', 'summary')

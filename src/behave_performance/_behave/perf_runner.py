@@ -2,7 +2,7 @@ from __future__ import absolute_import, print_function, with_statement
 
 import six
 
-from behave_performance.runtime import BEHAVE_EVENTS,PERF_EVENTS
+from behave_performance.events import BehaveEvents,PerfEvents
 from behave.formatter._registry import make_formatters
 from behave.api.runner import ITestRunner
 from behave.runner import Context

@@ -1,6 +1,8 @@
 from enum import Enum
 
-class PERF_EVENTS(Enum):
+class PerfEvents(Enum):
+    """Behave Performance Events
+    """
     SOURCE='source'
     SALAD_DOCUMENT='salad-document'
     SALAD_PARSER_ERROR='salad-parser-error'
@@ -24,14 +26,9 @@ class PERF_EVENTS(Enum):
     FORMATTER_FINISHED = 'formatter-finished'
     ANNOUNCEMENT = 'announce'
 
-class RUN_EVENTS(Enum):
-    SOURCE='source'
-    SALAD_DOCUMENT='salad-document'
-    VEGGIE='veggie'
-    VEGGIE_ACCEPTED='veggie-accepted'
-    VEGGIE_REJECTED='veggie-rejected'
-
-class BEHAVE_EVENTS(Enum):
+class BehaveEvents(Enum):
+    """Behave events
+    """
     TEST_RUN_STARTED='test-run-started'
     TEST_CASE_PREPARED='test-case-prepared'
     TEST_CASE_STARTED='test-case-started'

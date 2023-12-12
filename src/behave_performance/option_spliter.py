@@ -1,6 +1,15 @@
 import re
 
-def split(option):
+def split(option:str):
+    """Splits type, output and options from a formatter string
+        example: "pretty:C:/outputto/text.txt:opt1,opt2"
+
+    Args:
+        option (str): The formatter string to split.
+
+    Returns:
+        dict: A dict with type, output_to and options
+    """
     parts = re.split(r':(?!\/|//)', option)
 
     def split_options(option):
@@ -12,9 +21,9 @@ def split(option):
             result[2]=result[2]+':'+part
         else:
             result.append(part)
-    if not len(result) > 1:
+    if result <= 1:
         result.append('')
-    if not len(result) > 2:
+    if result <= 2:
         result.append([])
     else:
         result[2] = split_options(result[2])
