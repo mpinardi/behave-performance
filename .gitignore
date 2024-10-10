@@ -7,4 +7,4 @@
 **/__pycache__
 **/.eggs/
 **/*.log
-Pipfile.loc
+Pipfile.lock

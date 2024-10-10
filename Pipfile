@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 pyee = "*"
 aiofiles = "*"
-behave = {git = "https://github.com/behave/behave@v1.2.7.dev5"}
+behave = "==1.2.7.dev6"
 
 [dev-packages]
 autopep8 = "*"

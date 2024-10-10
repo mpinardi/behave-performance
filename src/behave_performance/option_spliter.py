@@ -21,9 +21,9 @@ def split(option:str):
             result[2]=result[2]+':'+part
         else:
             result.append(part)
-    if result <= 1:
+    if len(result) <= 1:
         result.append('')
-    if result <= 2:
+    if len(result) <= 2:
         result.append([])
     else:
         result[2] = split_options(result[2])

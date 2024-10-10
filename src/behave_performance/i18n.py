@@ -29,7 +29,7 @@ def get_table(headers:list[str], rows:list[list[str]],space=10):
         for i in range(len(row)):
             if not isinstance(row[i], str):
                 row[i] = str(row[i])
-            result += row_format.format('', *row)+'\n'
+        result += row_format.format('', *row)+'\n'
     return result
 
 def get_languages():

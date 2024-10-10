@@ -63,7 +63,7 @@ def manager(uid,thread_count:int,input_queue: Queue, result_queue: Queue, bargs)
                     last_t = None
                 else:
                     t:Task = input_queue.get(False) 
-                match t.Task:
+                match t.task:
                     case RUNNER_TASKS.STOP_ALL.name:
                         executing = False
                     case RUNNER_TASKS.RAMP.name:

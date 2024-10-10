@@ -129,6 +129,7 @@ class BehavePerformance(object):
                     g['running'] = 0
                     g['ran'] = 0
                     g['max_runners'] = g['runners']
+                    g['status']= ''
                     self.groups[g['id']] = g
                     self.max_runners = self.cur_max_runners+int(g['runners'])
                     self.cur_max_runners = self.max_runners
@@ -236,7 +237,7 @@ class BehavePerformance(object):
                             (self.end_ramp - cur_time), self.max_ramp_periods)
                         self.ramper = await set_interval_async(ramp_period, self.__ramp)
 
-            # are all runners runningramp_up
+            # are all runners running ramp_up
             if self.running < self.cur_max_runners and (self.scheduled_runtime is not None or await self.__has_groups_to_run()):
                 pi = 0
                 for i in range(self.cur_max_runners-self.running):
@@ -305,10 +306,10 @@ class BehavePerformance(object):
             Check if its has the lowest or highest number avaiable based on ramp direction.
 
         Args:
-            p_id (int): _description_
+            p_id (int): process id
 
         Returns:
-            _type_: _description_
+            bool: True if should ramp else False.
         """
         maxs = [y for x, y in self.processes]
         if self.ramp_up:

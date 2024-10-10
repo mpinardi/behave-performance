@@ -192,8 +192,12 @@ class PerfRunnerBuilder():
         )
         if not config.format:
             config.format = []#config.default_format or 'plain'
+        
         # This does not seem strickly necessary
-        steps = copy.deepcopy(the_step_registry)
+        #steps = copy.deepcopy(the_step_registry)
+        # ^ This did work but now seems there is a lock in it now.
+        # Should clean this out.
+        steps = the_step_registry
         return  PerfRunner(group['id'],group['text'],config,features,steps,self.hooks)
     
     def get_slice(self,group):
